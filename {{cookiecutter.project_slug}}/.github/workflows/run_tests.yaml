@@ -11,8 +11,7 @@ jobs:
     strategy:
       # select multiple version of Python to test
       matrix:
-        #python-version: [3.8, 3.9]
-        python-version: {{ cookiecutter.supported_python_versions }}
+        python-version: [3.8, 3.9]
     steps:
       - uses: actions/checkout@v2
       - name: Setup Python ${{ matrix.python-version }}
