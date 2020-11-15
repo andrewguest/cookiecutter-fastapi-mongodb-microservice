@@ -1,0 +1,4 @@
+docker-compose.yml
+**/__pycache__
+**/.pytest_cache
+*_venv/

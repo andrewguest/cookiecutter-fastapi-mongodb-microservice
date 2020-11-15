@@ -1,0 +1,16 @@
+certifi==2020.11.8
+chardet==3.0.4
+click==7.1.2
+fastapi==0.61.2
+gunicorn==20.0.4
+h11==0.11.0
+httptools==0.1.1
+idna==2.10
+motor==2.3.0
+pydantic==1.7.2
+pymongo==3.11.0
+requests==2.25.0
+starlette==0.13.6
+urllib3==1.26.2
+uvicorn==0.12.2
+uvloop==0.14.0

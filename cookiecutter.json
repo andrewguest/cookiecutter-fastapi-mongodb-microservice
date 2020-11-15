@@ -1,5 +1,7 @@
 {
   "project_name": "",
   "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '-') }}",
-  "mongodb_port": ""
+  "mongodb_port": "",
+  "mongodb_local_storage": "/tmp/{{ cookiecutter.project_slug }}",
+  "api_port": ""
 }
