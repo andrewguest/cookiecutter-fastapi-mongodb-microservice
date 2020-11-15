@@ -1,0 +1,27 @@
+version: "3"
+
+# define services (containers)
+services:
+  {{ cookiecutter.project_slug }}_api:
+    image: millennium_api:v0.1
+    command: gunicorn app.main:api --bind 0.0.0.0:5000 -k uvicorn.workers.UvicornWorker
+    ports:
+      # host:container
+      - "5000:5000"
+    restart: always
+    environment:
+      - MONGODB_SERVERNAME={{ cookiecutter.project_slug }}_db
+    depends_on:
+      - millennium_api_db
+
+    # Set a custom name for the Docker container that will be created from this service
+    container_name: "{{ cookiecutter.project_slug }}_api"
+
+  {{ cookiecutter.project_slug }}_db:
+    image: mongo
+    volumes:
+      - /srv/www/bosa/millennium-api-db:/data/db
+    container_name: "bosa_millennium_db"
+    ports:
+      - "{{ cookiecutter.mongodb_port }}:27017"
+    restart: always

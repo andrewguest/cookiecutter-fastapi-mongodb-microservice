@@ -1,5 +1,5 @@
 {
   "project_name": "",
   "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '-') }}",
-  "supported_python_versions": [3.8, 3.9]
+  "mongodb_port": ""
 }
