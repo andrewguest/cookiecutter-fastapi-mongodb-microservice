@@ -2,7 +2,7 @@ from fastapi.testclient import TestClient
 
 # import our instance of FastAPI() that was saved
 #   in the 'api' variable in the app/main.py file
-from app.main import api
+from app.{{ cookiecutter.microservice_slug }}_api import api
 
 
 client = TestClient(api)

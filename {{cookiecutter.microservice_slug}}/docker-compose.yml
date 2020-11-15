@@ -1,0 +1,23 @@
+version: "3"
+
+# define services (containers)
+services:
+  {{ cookiecutter.microservice_slug }}_api:
+    build:
+      context: '.'
+    image: {{ cookiecutter.microservice_slug }}_api
+    command: gunicorn app.{{ cookiecutter.microservice_slug }}_api:api --bind 0.0.0.0:5000 -k uvicorn.workers.UvicornWorker
+    ports:
+      # host:container
+      - "{{ cookiecutter.api_port }}:5000"
+    restart: always
+    depends_on:
+      - {{ cookiecutter.microservice_slug }}_db
+    container_name: "{{ cookiecutter.microservice_slug }}_api"
+
+  {{ cookiecutter.microservice_slug }}_db:
+    image: mongo
+    volumes:
+      - {{ cookiecutter.mongodb_local_storage }}:/data/db
+    container_name: "{{ cookiecutter.microservice_slug }}_db"
+    restart: always
