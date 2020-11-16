@@ -2,5 +2,6 @@
   "microservice_name": "",
   "microservice_slug": "{{ cookiecutter.microservice_name.lower().replace(' ', '_') }}",
   "mongodb_local_storage": "/tmp/{{ cookiecutter.microservice_slug }}",
-  "api_port": ""
+  "api_port": "",
+  "gunicorn_uvicorn_workers": "1"
 }

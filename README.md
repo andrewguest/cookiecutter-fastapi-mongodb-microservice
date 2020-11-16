@@ -18,6 +18,8 @@ This template is meant to be used for an individual microservice, so it could be
       * What path, on the host machine, do you want to mount into the MongoDB container for it to (persistantly) store data?
     * ```api_port []: 5050```
       * What port would you like the API container to listen on?
+    * ```gunicorn_uvicorn_workers [1]: ```
+      * How many uvicorn worker processes would you like gunicorn to start? More workers means your app can handle more traffic, but will use more resources.
 
 4. Start this service (these two containers): ```docker-compose up -d --build```
 
