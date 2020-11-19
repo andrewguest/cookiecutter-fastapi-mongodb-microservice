@@ -2,22 +2,25 @@ version: "3"
 
 # define services (containers)
 services:
-  {{ cookiecutter.microservice_slug }}_api:
+  {{cookiecutter.api_container_name}}:
     build:
       context: '.'
-    image: {{ cookiecutter.microservice_slug }}_api
-    command: gunicorn app.{{ cookiecutter.microservice_slug }}_api:api --bind 0.0.0.0:5000 -w {{ cookiecutter.gunicorn_uvicorn_workers }} -k uvicorn.workers.UvicornWorker
+    image: {{cookiecutter.api_container_name}}
+    command: gunicorn app.{{cookiecutter.api_container_name}}:api --bind 0.0.0.0:5000 -w {{cookiecutter.gunicorn_uvicorn_workers}} -k uvicorn.workers.UvicornWorker
     ports:
       # host:container
-      - "{{ cookiecutter.api_port }}:5000"
+      - "{{cookiecutter.api_port}}:5000"
     restart: always
     depends_on:
-      - {{ cookiecutter.microservice_slug }}_db
-    container_name: "{{ cookiecutter.microservice_slug }}_api"
+      - {{cookiecutter.mongodb_container_name}}
+    container_name: "{{cookiecutter.api_container_name}}"
 
-  {{ cookiecutter.microservice_slug }}_db:
+  {{cookiecutter.mongodb_container_name}}:
     image: mongo
+    command:
+        - '--auth'
     volumes:
-      - {{ cookiecutter.mongodb_local_storage }}:/data/db
-    container_name: "{{ cookiecutter.microservice_slug }}_db"
+      - {{cookiecutter.mongodb_local_storage}}:/data/db
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js
+    container_name: "{{cookiecutter.mongodb_container_name}}"
     restart: always
