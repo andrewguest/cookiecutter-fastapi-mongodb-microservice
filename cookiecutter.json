@@ -1,7 +1,13 @@
 {
   "microservice_name": "",
   "microservice_slug": "{{ cookiecutter.microservice_name.lower().replace(' ', '_') }}",
+  "mongodb_database": "test_db",
+  "mongodb_collection": "test_collection",
+  "mongodb_new_username": "changeme",
+  "mongodb_new_username_password": "changeme",
   "mongodb_local_storage": "/tmp/{{ cookiecutter.microservice_slug }}",
-  "api_port": "",
+  "mongodb_container_name": "{{ cookiecutter.microservice_slug }}_db",
+  "api_container_name": "{{ cookiecutter.microservice_slug }}_api",
+  "api_port": "5050",
   "gunicorn_uvicorn_workers": "1"
 }

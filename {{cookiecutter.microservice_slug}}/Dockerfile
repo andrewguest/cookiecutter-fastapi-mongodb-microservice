@@ -1,37 +1,23 @@
-FROM amd64/python:3.9.0-slim-buster
+# pull official base image
+FROM python:3.9.0-alpine
 
-# define some environment variables
-ENV WORKDIR=/usr/src/app
-ENV USER=app
-ENV APP_HOME=/home/app/web
+# set work directory
+WORKDIR /usr/src/app
 
-# set some environment variables inside the Docker container
-ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
-# set the path where the command, defined with CMD, is to be executed inside the Docker container
-WORKDIR ${WORKDIR}
+# copy requirements file
+COPY ./requirements.txt /usr/src/app/requirements.txt
 
-RUN pip install --upgrade pip
+# install dependencies
+RUN set -eux \
+    && apk add --no-cache --virtual .build-deps build-base \
+    libressl-dev libffi-dev gcc musl-dev python3-dev \
+    && pip install --upgrade pip setuptools wheel \
+    && pip install -r /usr/src/app/requirements.txt \
+    && rm -rf /root/.cache/pip
 
-# copy the requirements.txt file into the WORKDIR location
-COPY ./requirements.txt ${WORKDIR}/requirements.txt
-
-# install 'gcc' compiler
-RUN apt update && apt install build-essential -y
-
-RUN pip install -r requirements.txt
-
-# create a system user to run the app
-RUN adduser --system --group ${USER}
-
-RUN mkdir ${APP_HOME}
-
-# change the working directory
-WORKDIR ${APP_HOME}
-
-COPY . ${APP_HOME}
-
-RUN chown -R ${USER}:${USER} ${APP_HOME}
-
-# set the username which is to run the container
-USER ${USER}
+# copy project
+COPY . /usr/src/app/
