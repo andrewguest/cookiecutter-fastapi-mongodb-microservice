@@ -22,6 +22,10 @@ async def index():
             <p>Verify FastAPI can communicate with the MongoDB database container:</p>
             <p><a href="/mongo" target="_blank" rel="noopener noreferrer">Mongodb check!</a></p>
             <p>There won't actually be any data in the MongoDB to be returned, but you should get an empty list, a 200 response code, and not see any errors. This is mainly what we're shooting for with this route.</p>
+            <br />
+            <p>API documentation:</p>
+            <p><a href="/docs" target="_blank" rel="noopener noreferrer">Swagger UI documentation!</a></p>
+            <p><a href="/redoc" target="_blank" rel="noopener noreferrer">ReDoc documentation!</a></p>
         </body>
     """
 
