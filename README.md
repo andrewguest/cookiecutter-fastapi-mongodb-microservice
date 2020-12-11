@@ -53,7 +53,7 @@ This template is meant to be used for an individual microservice, so it could be
 
 ```
 |-- app
-  \-- {{ cookiecutter.microservice_slug }}_api.py (entry point for application)
+  \-- main.py (entry point for application)
 |-- database (contains all database related code)
 |-- routes (contains all routes to be defined)
 |-- tests (contains all of the tests)
@@ -65,4 +65,4 @@ docker-compose.yml (start a container for the API and the MongoDB for this micro
 
 3. Configure the docker-compose.yml file to start the API container and a MongoDB container.
 
-4. Automatically setup the connection between the API and the MongoDB container, inside of `app/{{ cookiecutter.microservice_slug }}_api.py`
+4. Automatically setup the connection between the API and the MongoDB container, inside of `app/main.py`
