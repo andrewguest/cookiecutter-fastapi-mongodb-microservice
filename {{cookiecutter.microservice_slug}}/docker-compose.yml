@@ -6,7 +6,7 @@ services:
     build:
       context: '.'
     image: {{cookiecutter.api_container_name}}
-    command: gunicorn app.{{cookiecutter.api_container_name}}:api --bind 0.0.0.0:5000 -w {{cookiecutter.gunicorn_uvicorn_workers}} -k uvicorn.workers.UvicornWorker
+    command: gunicorn app.main:api --bind 0.0.0.0:5000 -w {{cookiecutter.gunicorn_uvicorn_workers}} -k uvicorn.workers.UvicornWorker
     ports:
       # host:container
       - "{{cookiecutter.api_port}}:5000"
