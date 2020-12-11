@@ -2,15 +2,15 @@ from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from motor import motor_asyncio
 
-from routes import ping
+from database import mongo_config
+from routes import ExampleRoutes
 
 
 api = FastAPI()
-mongodb_connection = motor_asyncio.AsyncIOMotorClient('mongodb://{{cookiecutter.mongodb_new_username}}:{{cookiecutter.mongodb_new_username_password}}@{{cookiecutter.mongodb_container_name}}:27017/{{cookiecutter.mongodb_database}}?authSource={{cookiecutter.mongodb_database}}')
 
 
 # This is just an informational route. It can be removed if unwanted/unneeded
-@api.get('/', response_class=HTMLResponse)
+@api.get("/", response_class=HTMLResponse)
 async def index():
     return """
     <html>
@@ -18,6 +18,9 @@ async def index():
         <body>
             <p>Verify FastAPI is working correctly with a simple ping/pong route:</p>
             <p><a href="/ping" target="_blank" rel="noopener noreferrer">ping/pong check!</a></p>
+            <br />
+            <p>Play with some tasks:</p>
+            <p><a href="/task" target="_blank" rel="noopener noreferrer">Create, List, Update, and Delete fake tasks!</a></p>
             <br />
             <p>Verify FastAPI can communicate with the MongoDB database container:</p>
             <p><a href="/mongo" target="_blank" rel="noopener noreferrer">Mongodb check!</a></p>
@@ -30,6 +33,21 @@ async def index():
     """
 
 
-api.include_router(
-    ping.router
-)
+# Connect to the MongoDB container when the FastAPI app is started.
+# The MongoDB connection information is pulled from database/mongodb_config.py
+@api.on_event("startup")
+async def startup_db_client():
+    api.mongodb_client = motor_asyncio.AsyncIOMotorClient(
+        mongo_config.example_db_settings.DB_URL
+    )
+    api.mongodb = api.mongodb_client[mongo_config.example_db_settings.DB_NAME]
+    api.mongodb_collection = api.mongodb[mongo_config.example_db_settings.COLLECTION_NAME]
+
+
+# Close the MongoDB connection when the FastAPI app is shutdown
+@api.on_event("shutdown")
+async def shutdown_db_client():
+    api.mongodb_client.close()
+
+
+api.include_router(ExampleRoutes.router, tags=["Test Routes"])
