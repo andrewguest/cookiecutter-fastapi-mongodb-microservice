@@ -2,7 +2,7 @@ from fastapi import APIRouter, Body, Request, HTTPException, status
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 
-from models.ExampleTask import TaskModel, UpdateTaskModel
+from app.models.ExampleTask import TaskModel, UpdateTaskModel
 
 
 router = APIRouter()
@@ -49,7 +49,7 @@ async def list_tasks(request: Request):
 # GET a specific task by "id" field (_id inside the MongoDB)
 @router.get("/task/{id}", response_description="Get a single task")
 async def show_task(id: str, request: Request):
-    if (task: = await request.app.mongodb["tasks"].find_one({"_id": id})) is not None:
+    if (task := await request.app.mongodb["tasks"].find_one({"_id": id})) is not None:
         return task
 
     raise HTTPException(status_code=404, detail=f"Task {id} not found")
@@ -65,11 +65,11 @@ async def update_task(id: str, request: Request, task: UpdateTaskModel = Body(..
         )
         if update_result.modified_count == 1:
             if (
-                updated_task: = await request.app.mongodb["tasks"].find_one({"_id": id})
+                updated_task := await request.app.mongodb["tasks"].find_one({"_id": id})
             ) is not None:
                 return updated_task
     if (
-        existing_task: = await request.app.mongodb["tasks"].find_one({"_id": id})
+        existing_task := await request.app.mongodb["tasks"].find_one({"_id": id})
     ) is not None:
         return existing_task
 
