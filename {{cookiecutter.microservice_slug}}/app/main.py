@@ -2,8 +2,8 @@ from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from motor import motor_asyncio
 
-from database import mongo_config
-from routes import ExampleRoutes
+from app.database import mongo_config
+from app.routes import ExampleRoutes
 
 
 api = FastAPI()
