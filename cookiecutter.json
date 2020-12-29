@@ -9,5 +9,8 @@
   "mongodb_container_name": "{{ cookiecutter.microservice_slug }}_db",
   "api_container_name": "{{ cookiecutter.microservice_slug }}_api",
   "api_port": "5050",
-  "gunicorn_uvicorn_workers": "1"
+  "gunicorn_uvicorn_workers": "1",
+  "_copy_without_render": [
+    ".github"
+  ]
 }
