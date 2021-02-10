@@ -7,7 +7,7 @@ httptools==0.1.1
 idna==2.10
 motor==2.3.0
 pydantic==1.7.3
-pymongo==3.11.1
+pymongo==3.11.3
 requests==2.25.0
 starlette==0.13.6
 urllib3==1.26.2
