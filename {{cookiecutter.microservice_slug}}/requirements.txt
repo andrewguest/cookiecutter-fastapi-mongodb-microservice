@@ -11,5 +11,5 @@ pymongo==3.11.1
 requests==2.25.0
 starlette==0.13.6
 urllib3==1.26.2
-uvicorn==0.12.3
+uvicorn==0.13.4
 uvloop==0.14.0
